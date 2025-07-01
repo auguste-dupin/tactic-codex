@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/tactic.db:/app/tactic.db
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/vite.config.js:/app/vite.config.js
+      - ./frontend/tailwind.config.js:/app/tailwind.config.js
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
